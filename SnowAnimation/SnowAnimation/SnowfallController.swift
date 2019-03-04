@@ -37,19 +37,11 @@ public final class SnowfallController {
 private final class SnowfallWindow: UIWindow {
     init() {
         super.init(frame: UIScreen.main.bounds)
+        isUserInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView = super.hitTest(point, with: event)
-        if hitView!.isKind(of: IgnoreTouchView.self) {
-            return nil
-        }
-
-        return hitView
     }
 }
 
@@ -59,7 +51,7 @@ private final class SnowfallViewController: UIViewController {
     private let snowFlakeEmitter = SnowFlakeEmitter()
     
     private let backgroundView: UIView = {
-        let backgroundView = IgnoreTouchView()
+        let backgroundView = UIView()
         backgroundView.backgroundColor = .clear
         backgroundView.alpha = 0
         return backgroundView
@@ -87,5 +79,3 @@ private final class SnowfallViewController: UIViewController {
         })
     }
 }
-
-private final class IgnoreTouchView: UIView {}
